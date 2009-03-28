@@ -3,6 +3,7 @@ package hackaton2.server.rest
 import _root_.java.io._
 import _root_.java.lang.annotation.Annotation
 import _root_.java.lang.reflect.Type
+import api.ToJSON
 import javax.ws.rs._
 import javax.ws.rs.core._
 import javax.ws.rs.ext._
@@ -27,17 +28,6 @@ class JSONWriterProvider extends MessageBodyWriter[Any] {
   def getSize(t: Any, c: Class[_], gt: Type, annotations: Array[Annotation], mediaType: MediaType) = -1L
 }
 
-object ToJSON {
-  def apply(any:Any): String = any match {
-    case t: ToMap => ToJSON(t.toMap)
-    case m: Map[_, _] => m.map(kv => "\"" + kv._1 + "\":" + ToJSON(kv._2)).mkString("{", ",", "}")
-    case s: Seq[_] => s.map(x => ToJSON(x)).mkString("[", ",", "]")
-    case x@(_: Boolean | _: Int | _: Long | _: Double | _: Float) => x.toString
-    case null => "null"
-    case x => "\"" + x.toString + "\""
-  }
-}
-
 @Provider
 class JSONReaderProvider extends MessageBodyReader[Map[String, Any]] with IOUtil {
   def readFrom(clazz: Class[Map[String, Any]],
@@ -52,20 +42,4 @@ class JSONReaderProvider extends MessageBodyReader[Map[String, Any]] with IOUtil
                 t: Type,
                 annotation: Array[Annotation],
                 mediaType: MediaType) = clazz.isAssignableFrom(classOf[Map[String, Any]])
-}
-
-trait FromMap[T] {
-  class TypedMap(map: Map[String, Any]) {
-    def string(k: String) = map(k).toString
-
-    def int(k: String) = map(k).toString.toInt
-  }
-
-  implicit def map2typed(map: Map[String, Any]) = new TypedMap(map)
-
-  def apply(map: Map[String, Any]): T
-}
-
-trait ToMap {
-  def toMap: Map[String, Any]
 }
