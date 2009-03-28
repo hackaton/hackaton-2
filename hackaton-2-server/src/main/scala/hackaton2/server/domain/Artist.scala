@@ -1,6 +1,6 @@
 package hackaton2.server.domain
 
-import rest.{FromMap, ToMap}
+import api.{FromMap, ToMap}
 
 object Artist extends FromMap[Artist] {
   def apply(map:Map[String,Any]) = Artist(map.int("id"), map.string("name"))
