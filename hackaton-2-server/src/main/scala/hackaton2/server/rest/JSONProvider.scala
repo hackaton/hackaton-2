@@ -26,7 +26,7 @@ class JSONProvider extends MessageBodyWriter[Any] {
   def getSize(t: Any, c: Class[_], gt: Type, annotations: Array[Annotation], mediaType: MediaType) = -1L
 
   def toJSON(any: Any): String = any match {
-    case t:Mappable[_] => toJSON(t.toMap)
+    case t:ToMap => toJSON(t.toMap)
     case m: Map[_, _] => m.map(kv => "\"" + kv._1 + "\":" + toJSON(kv._2)).mkString("{", ",", "}")
     case s: Seq[_] => s.map(x => toJSON(x)).mkString("[", ",", "]")
     case x @ (_: Boolean | _:Int | _:Long | _:Double | _:Float) => x.toString
@@ -35,7 +35,10 @@ class JSONProvider extends MessageBodyWriter[Any] {
   }
 }
 
-trait Mappable[T] {
+trait FromMap[T] {
+  def apply(map:Map[String,Any]):T
+}
+
+trait ToMap {
   def toMap:Map[String,Any]
-  def fromMap(map:Map[String,Any]):T
 }
