@@ -1,6 +1,5 @@
 package hackaton2.server.domain
 
-
 import actors.Actor
 import actors.Actor._
 import api.{FromMap, ToMap}
@@ -20,6 +19,11 @@ object Friends extends Actor {
         reply(friends)
         loop(friends)
       }
+      case p: PostAlbumFriends => {
+        friends.foreach (friend => {
+          
+        })
+      }
     }
   }
 
@@ -36,3 +40,5 @@ case class NewFriend(url:String, nick:String) extends ToMap {
 }
 
 case object ListFriends
+
+case class PostAlbumFriends(friendsAlbum: FriendsAlbum)
