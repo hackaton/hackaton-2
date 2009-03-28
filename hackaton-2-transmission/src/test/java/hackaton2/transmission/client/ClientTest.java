@@ -1,6 +1,7 @@
 package hackaton2.transmission.client;
 
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -15,7 +16,7 @@ public class ClientTest {
     private static final String LouisArmstrongName = "Louis Armstrong - Louis Armstrong's All Time Greatest Hits";
 
     @Test
-//    @Ignore
+    @Ignore
     public void testBasic() throws Exception {
         Transmission transmission = new DefaultTransmission("http://127.0.0.1:9091/transmission/rpc");
 
@@ -26,7 +27,7 @@ public class ClientTest {
         }
     }
 
-    //    @Ignore
+    @Ignore
     @Test
     public void testAddRemove() throws Exception {
         Transmission transmission = new DefaultTransmission("http://127.0.0.1:9091/transmission/rpc");
