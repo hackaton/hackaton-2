@@ -2,7 +2,7 @@ package hackaton2.server.domain
 
 import actors.Actor
 import actors.Actor._
-import rest.{ToMap, FromMap}
+import api.{FromMap, ToMap}
 
 object Friends extends Actor {
 
