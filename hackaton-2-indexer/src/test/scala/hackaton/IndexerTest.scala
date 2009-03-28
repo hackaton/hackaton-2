@@ -11,10 +11,13 @@ class IndexerTest {
     val music: File = new File(url.toURI)
     val indexer: Indexer = new Indexer(music.getPath)
 
-    for (song <- indexer.flacFiles)
-      println(song)
+//    for (song <- indexer.songs)
+//      println(song)
 
-    for (song <- indexer.flacFiles)
-      println(ToJSON(song))
+//    for (song <- indexer.songs)
+//      println(ToJSON(song))
+
+    for (album <- indexer.albums)
+      println(album)
   }
 }
