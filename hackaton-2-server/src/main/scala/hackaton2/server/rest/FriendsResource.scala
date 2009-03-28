@@ -1,5 +1,7 @@
 package hackaton2.server.rest
 
+
+import domain.{ListFriends, Friends, NewFriend, Friend}
 import javax.ws.rs._
 
 @Path("/friends")
@@ -7,11 +9,12 @@ import javax.ws.rs._
 class FriendsResource {
 
   @GET
-  def get = Map("a" -> List("A", "B"), "b" -> 5, "c" -> false, "d" -> Map("q" -> "p", "p" -> "q"))
+  @Path("{id}")
+  def get(@PathParam("id") id:Int) = List[Friend]()
+
+  @GET
+  def list = Friends !? ListFriends
 
   @POST
-  @Path("{id}")
-  def post(@PathParam("id") id:Int) = {
-    Map("ok" -> true, "updated" -> id)
-  }
+  def post(data:Map[String,Any]) = Friends !? NewFriend(data)
 }
