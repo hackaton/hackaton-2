@@ -1,8 +1,9 @@
 package hackaton2.server
 
 
+import api.FromJSON
 import com.jteigen.scalatest.JUnit4Runner
-import domain.NewFriend
+import domain.{Friend, NewFriend}
 import java.io.InputStream
 import org.junit.runner.RunWith
 import java.net.{HttpURLConnection, URL}
@@ -17,8 +18,9 @@ class FriendsIntegrationTest extends IntegrationSuite {
       JSON.parse(get("friends")) should be(Some(Nil))
     }
 
-    ignore("post /friends should return new friend id"){
-      JSON.parseFull(post("friends", NewFriend("http://foo.com", "foo"))) should be(Map("ok" -> true, "id" -> "1"))
+    it("post /friends should return new friend id"){
+      val newFriend = NewFriend("http://foo.com", "foo")
+      Friend(FromJSON.map(post("friends", newFriend))) should be(Friend(1, newFriend.url, newFriend.nick))
     }
   }
 }

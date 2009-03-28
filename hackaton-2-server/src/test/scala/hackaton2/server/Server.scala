@@ -3,6 +3,7 @@ package hackaton2.server
 import org.mortbay.jetty.nio.SelectChannelConnector
 import org.mortbay.jetty.webapp.WebAppContext
 import org.mortbay.jetty.{Server => JettyServer}
+import util.parsing.json.JSON
 
 object Server {
   val server = new JettyServer
