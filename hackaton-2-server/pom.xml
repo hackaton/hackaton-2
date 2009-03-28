@@ -15,6 +15,11 @@
     <dependencies>
         <dependency>
             <groupId>hackaton-2</groupId>
+            <artifactId>hackaton-2-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>hackaton-2</groupId>
             <artifactId>hackaton-2-transmission</artifactId>
             <version>${project.version}</version>
         </dependency>

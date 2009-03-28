@@ -10,6 +10,7 @@ import util.parsing.json.JSON
 
 @RunWith(classOf[JUnit4Runner])
 class FriendsIntegrationTest extends IntegrationSuite {
+
   describe("Friends resource"){
 
     it("get /friends should return empty list"){

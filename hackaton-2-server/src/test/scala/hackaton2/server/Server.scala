@@ -4,7 +4,7 @@ import org.mortbay.jetty.nio.SelectChannelConnector
 import org.mortbay.jetty.webapp.WebAppContext
 import org.mortbay.jetty.{Server => JettyServer}
 
-object Server {
+class Server() {
   val server = new JettyServer
   val connector = new SelectChannelConnector
 
@@ -26,4 +26,12 @@ object Server {
   def stop_! {
     server.stop
   }
+}
+
+object Server extends Server {
+
+  def main(args: Array[String]) {
+    start_!(8080)
+  }
+
 }

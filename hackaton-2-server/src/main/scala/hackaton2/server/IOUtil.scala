@@ -1,6 +1,5 @@
 package hackaton2.server
 
-
 import java.io.InputStream
 
 trait IOUtil {
