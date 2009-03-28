@@ -7,8 +7,12 @@ import org.mortbay.jetty.{Server => JettyServer}
 class Server() {
   val server = new JettyServer
   val connector = new SelectChannelConnector
-  
-  def start_!(port:Int) {
+
+  def main(args: Array[String]) {
+    start_!(8080)
+  }
+
+  def start_!(port: Int) {
     connector.setPort(port)
     server.setConnectors(Array(connector))
 
@@ -22,7 +26,6 @@ class Server() {
   def stop_! {
     server.stop
   }
-
 }
 
 object Server extends Server {
