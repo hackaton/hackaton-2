@@ -26,44 +26,81 @@ public class DefaultTransmission implements Transmission {
         this.url = url;
     }
 
+    // -----------------------------------------------------------------------
+    // Transmission Implementation
+    // -----------------------------------------------------------------------
+
     public List<Torrent> getTorrents() throws Exception {
         Map<String, Object> arguments = new HashMap<String, Object>();
-        arguments.put("fields", asList("id", "name"));
+        arguments.put("fields", asList("id", "name", "hashString"));
 
-        JSONObject responseArguments = request(arguments);
+        JSONObject responseArguments = request("torrent-get", arguments);
 
         JSONArray torrentsObject = responseArguments.getJSONArray("torrents");
         List<Torrent> torrents = new ArrayList<Torrent>();
 
         int length = torrentsObject.length();
-        for(int i =0; i < length; i++) {
-            JSONObject torrentObject = torrentsObject.getJSONObject(i);
-            torrents.add(new Torrent(torrentObject.getString("id"), torrentObject.getString("name")));
+        for (int i = 0; i < length; i++) {
+            torrents.add(Torrent.fromJsonObject(torrentsObject.getJSONObject(i)));
         }
 
         return torrents;
     }
 
-    public JSONObject request(Map<String, Object> arguments) throws Exception {
+    public Torrent addTorrent(String filename, boolean paused) throws Exception {
+        Map<String, Object> arguments = new HashMap<String, Object>();
+        arguments.put("filename", filename);
+        arguments.put("paused", paused);
+
+        JSONObject responseArguments = request("torrent-add", arguments);
+
+        JSONObject torrentObject = responseArguments.getJSONObject("torrent-added");
+
+        return Torrent.fromJsonObject(torrentObject);
+    }
+
+    public void remove(int id, boolean deleteLocalData) throws Exception {
+        Map<String, Object> arguments = new HashMap<String, Object>();
+        arguments.put("ids", asList(id));
+        arguments.put("delete-local-data", deleteLocalData);
+
+        request("torrent-remove", arguments);
+    }
+
+    // -----------------------------------------------------------------------
+    //
+    // -----------------------------------------------------------------------
+
+    private JSONObject request(String method, Map<String, Object> arguments) throws Exception {
         Map<String, Object> request = new HashMap<String, Object>();
 
-        request.put("method", "torrent-get");
+        request.put("method", method);
         request.put("arguments", new JSONObject(arguments));
 
 
         HttpClient httpclient = new DefaultHttpClient();
 
         HttpPost httpPost = new HttpPost(url);
-        httpPost.setEntity(new StringEntity(new JSONObject(request).toString()));
+        String requestJson = new JSONObject(request).toString();
+        System.out.println("-------------------------------------");
+        System.out.println("Request:");
+        System.out.println("-------------------------------------");
+        System.out.println(requestJson);
+        System.out.println("-------------------------------------");
+        httpPost.setEntity(new StringEntity(requestJson));
 
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
 
-        String responseBody = httpclient.execute(httpPost, responseHandler);
-
-        JSONObject response = new JSONObject(responseBody);
+        String responseJson = httpclient.execute(httpPost, responseHandler);
+        System.out.println("-------------------------------------");
+        System.out.println("Response:");
+        System.out.println("-------------------------------------");
+        System.out.println(responseJson);
+        System.out.println("-------------------------------------");
+        JSONObject response = new JSONObject(responseJson);
 
         String resultS = response.getString("result");
-        if(!resultS.equals("success")) {
+        if (!resultS.equals("success")) {
             throw new RuntimeException("Request failed: " + resultS);
         }
 
