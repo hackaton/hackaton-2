@@ -1,9 +1,12 @@
 package hackaton2.server.domain
 
 
-import rest.Mappable
+import rest.{FromMap, ToMap}
 
-case class Friend(id:String, url:String, nick:String) extends Mappable[Friend] {
+object Friend extends FromMap[Friend] {
+  def apply(map:Map[String,Any]) = Friend(map("id").asInstanceOf[String], map("url").asInstanceOf[String], map("nick").asInstanceOf[String])
+}
+
+case class Friend(id:String, url:String, nick:String) extends ToMap {
   def toMap = Map("id" -> id, "url" -> url, "nick" -> nick)
-  def fromMap(map:Map[String,Any]) = Friend(map("id").asInstanceOf[String], map("url").asInstanceOf[String], map("nick").asInstanceOf[String])
 }
