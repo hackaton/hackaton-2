@@ -73,6 +73,7 @@
     </plugins>
   </build>
   <modules>
+    <module>hackaton-2-api</module>
     <module>hackaton-2-server</module>
     <module>hackaton-2-transmission</module>
   </modules>

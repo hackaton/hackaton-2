@@ -8,12 +8,11 @@ object Server {
   val server = new JettyServer
   val connector = new SelectChannelConnector
 
-
   def main(args: Array[String]) {
     start_!(8080)
   }
 
-  def start_!(port:Int) {
+  def start_!(port: Int) {
     connector.setPort(port)
     server.setConnectors(Array(connector))
 
