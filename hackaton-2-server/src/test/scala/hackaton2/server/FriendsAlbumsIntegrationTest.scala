@@ -1,5 +1,8 @@
 package hackaton2.server
 
+import api.domain._
+import domain._
+
 import com.jteigen.scalatest.JUnit4Runner
 
 import hackaton2.server.domain._
@@ -24,8 +27,9 @@ class FriendsAlbumsIntegrationTest extends Spec with BeforeAndAfter {
     Friends ! NewFriend("http://localhost:9090/", "funky")
     Friends ! NewFriend("http://localhost:9091/", "monkey")
     it("send albums to friends") {
-      val replies = Friends !? PostAlbumFriends(FriendsAlbum(new Friend(3, "http://snorkelhost:1984", "snorkel"), new Album(1, new Artist(1, "Johnny Cash"), "Ring of Fire")))
+      val replies = Friends !? PostAlbumFriends(FriendsAlbum(MySelf, new Album("Johnny Cash", "Ring of Fire", Nil)))
       println("REPLY: " + replies)
+      // TODO: Turned off until server clean-up issue resolved
 //      assert(FriendsAlbums !? CountAlbums === 2)
     }
   }

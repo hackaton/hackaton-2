@@ -9,20 +9,17 @@ import org.scalatest.{BeforeAndAfter, Spec}
 
 @RunWith(classOf[JUnit4Runner])
 class AlbumsSearchIntegrationTest extends Spec with BeforeAndAfter {
-  val serverA = new Server
-  val serverB = new Server
-  val me = new Server
   
   override def beforeEach {
-    serverA.start_!(9090)
-    serverB.start_!(9091)
-    me.start_!(9092)
+    Server.start_!(9090)
+    Server.start_!(9091)
+    Server.start_!(9092)
   }
 
   override def afterEach {
-    serverA.stop_!
-    serverB.stop_!
-    me.stop_!
+    Server.stop_!(9090)
+    Server.stop_!(9091)
+    Server.stop_!(9092)
   }
 
   describe("post") {

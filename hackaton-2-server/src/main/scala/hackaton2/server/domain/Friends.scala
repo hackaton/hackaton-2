@@ -22,9 +22,8 @@ object Friends extends Actor {
         loop(friends)
       }
       case p: PostAlbumFriends => {
-        val replies = friends.foreach (friend => {
-          def srvc = Http(friend.url)
-          srvc("friends-albums").post[String,String](ToJSON(p.friendsAlbum.toMap))
+        val replies = friends.map((friend: Friend) => {
+          Http(friend.url)("friends-albums").post[String,(Int, String)](ToJSON(p.friendsAlbum.toMap))._1
         })
         reply(replies)
         loop(friends)
@@ -50,3 +49,5 @@ case class NewFriend(url:String, nick:String) extends ToMap {
 case object ListFriends
 
 case class PostAlbumFriends(friendsAlbum: FriendsAlbum)
+
+case class PostAlbumsSearch(albumsSearch: AlbumsSearch)
