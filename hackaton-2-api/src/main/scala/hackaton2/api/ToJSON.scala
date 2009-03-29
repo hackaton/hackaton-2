@@ -50,15 +50,7 @@ object FromJSON {
     }
   }
 
-  def map(s: String) = {
-    val result: Any = JSON.parse(s)
-    println("map> "+ s + "\n" +result)
-    result.asInstanceOf[Map[String, Any]]
-  }
+  def map(s: String) = JSON.parse(s).asInstanceOf[Map[String, Any]]
 
-  def list(s: String) = {
-    val result: Any = JSON.parse(s)
-    println("list> "+s+"\n" +result)
-    result.asInstanceOf[List[Any]]
-  }
+  def list(s: String) = JSON.parse(s).asInstanceOf[List[Any]]
 }
