@@ -15,13 +15,13 @@ class FeedConsumerTest extends Spec with ShouldMatchers {
 
   //Server.start_!(9091)
 
-  describe("FeedConsumer") {
+  describe("AtomFeedProducer") {
 //    it("should receive feeds") {
-//       (new FeedConsumer).getAlbums
+//       (new AtomFeedProducer).getAlbums
 //    }
 
     it("should get a goddamn album") {
-      var albums = (new FeedConsumer).createAlbums
+      var albums = (new AtomFeedProducer).createAlbums
       println(albums)
     }
 
