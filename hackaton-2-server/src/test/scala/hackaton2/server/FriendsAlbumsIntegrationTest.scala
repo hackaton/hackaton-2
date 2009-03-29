@@ -6,6 +6,7 @@ import domain._
 import com.jteigen.scalatest.JUnit4Runner
 
 import hackaton2.server.domain._
+
 import java.io.File
 import org.junit.runner.RunWith
 import org.scalatest.{BeforeAndAfter, Spec}
@@ -28,7 +29,7 @@ class FriendsAlbumsIntegrationTest extends Spec with BeforeAndAfter {
     Friends ! NewFriend("http://localhost:9090/", "funky")
     Friends ! NewFriend("http://localhost:9091/", "monkey")
     it("send albums to friends") {
-      val replies = Friends !? PostAlbumFriends(FriendsAlbum(MySelf, new Album("Johnny Cash", "Ring of Fire", Nil, new File(""))))
+      val replies = Friends !? PostAlbumFriends(FriendsAlbum(MySelf, new Album("Johnny Cash", "Ring of Fire", Nil, new File("location"))))
       println("REPLY: " + replies)
 //      assert(FriendsAlbums !? CountFriendsAlbums === 2)
     }
