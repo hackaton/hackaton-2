@@ -12,4 +12,10 @@ case class Album(artist: String, name: String, songs: List[Song]) extends ToMap 
     Album(artist, name, song :: songs)
 
   def toMap = Map("artist" -> artist, "name" -> name, "songs" -> songs.map(_.toMap))
+  
+  def matches(criteria: String) = {
+    name.toLowerCase.contains(criteria) || 
+      artist.toLowerCase.contains(criteria) || 
+      songs.exists(_.track.toLowerCase.contains(criteria))
+  }
 }
