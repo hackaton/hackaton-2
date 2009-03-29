@@ -19,7 +19,7 @@ class FileScanner(basedir: String) {
   private def albumFrom(dir: File) = {
     val tracks = songsIn(dir)
     val firstTrack = tracks(0)
-    Album(firstTrack.artist, firstTrack.album, tracks, dir) 
+    Album(firstTrack.artist, firstTrack.album, tracks, dir)
   }
 
   private def allAlbums(f: File, al: List[Album]): List[Album] = (al /: f.listFiles) {
