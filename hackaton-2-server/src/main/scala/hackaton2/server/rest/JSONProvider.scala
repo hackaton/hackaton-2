@@ -36,8 +36,11 @@ class JSONReaderProvider extends MessageBodyReader[Map[String, Any]] with IOUtil
               annotations: Array[Annotation],
               mediaType: MediaType,
               multiValue: MultivaluedMap[String, String],
-              in: InputStream): Map[String, Any] =
-    FromJSON.map(("" /: in)(_ + _.asInstanceOf[Char]))
+              in: InputStream): Map[String, Any] = {
+   // FromJSON.map(("" /: in)(_ + _.asInstanceOf[Char]))
+    val reader = new BufferedReader(new InputStreamReader(in))
+    FromJSON.map(("" /: reader)(_ + _))
+  }
 
   def isReadable(clazz: Class[_],
                 t: Type,

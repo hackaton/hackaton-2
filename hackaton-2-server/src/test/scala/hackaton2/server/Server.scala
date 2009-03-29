@@ -23,9 +23,9 @@ object Server {
     context.setWar("src/main/webapp")
     server.addHandler(context)
     server.start
-  }
+  }                                                                                                   
 
   def stop_! {
-    server.stop
+    server.stop  //TODO how to kill a jetty... ?
   }
 }

@@ -13,4 +13,9 @@ class ToJSONTest extends FunSuite {
     val from = Map("1" -> 1, "2" -> "2", "3" -> List("1", "2", "3"), "4" -> Map("x" -> 1, "y" -> 2))
     assert(JSON.parseFull(ToJSON(from)).get == from)
   }
+
+  test("toJSON"){
+    val json = ToJSON(Map("url" -> "http://foo.com", "nick" -> "monkey"))
+    assert(json === """{"url":"http://foo.com","nick":"monkey"}""")
+  }
 }
