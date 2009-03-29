@@ -1,7 +1,7 @@
 package hackaton2.server.domain
 
 import api.domain._
-import api.ToJSON
+import api.ToJSON._
 import domain._
 import http.Http
 import http.Http._
@@ -21,9 +21,8 @@ object Albums extends Actor {
         loop(a :: albums)
       }
       case search: AlbumsSearch => {
-        var replies = albums.filter(_ matches search.criteria).map((album) => {
-          Http(search.origin.url)("albums-search-matches").post[String,(Int,String)](ToJSON(AlbumsSearchMatch(search, FriendsAlbum(MySelf, album))))._1
-        })
+        var replies = albums.filter(_ matches search.criteria).map((album) =>
+          Http(search.origin.url)("albums-search-matches").post[String,(Int,String)](AlbumsSearchMatch(search, FriendsAlbum(MySelf, album)).json)._1)
         reply(replies)
         loop(albums)
       }

@@ -109,7 +109,6 @@ class Http(url: String, properties: Property*) {
   def process[A, B](a: Option[Seq[A]], properties: Property*)(implicit send: Send[A], receive: Receive[B]) = {
     val connection = new java.net.URL(url).openConnection.asInstanceOf[HttpURLConnection]
     properties ++ receive.properties ++ send.properties foreach (x => x(connection))
-    //print(">>> "+ connection.getRequestMethod + " | " + url)
     connection.connect()
     a.foreach(x => send(x, connection.getOutputStream))
 
@@ -118,7 +117,6 @@ class Http(url: String, properties: Property*) {
       case x if {x >= 100 && x < 400} => connection.getInputStream
       case x if x >= 400 => connection.getErrorStream
     }
-    //println(" | " + status)
     receive(status, in)
   }
 }

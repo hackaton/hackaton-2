@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response
 
 @Path("/albums-search-matches")
 @Produces(Array("application/json"))
-class AlbumsSearchMatchesResources {
+class AlbumsSearchMatchesResource {
 
   @POST
   def post(data:Map[String,Any]): Response = {
