@@ -1,6 +1,7 @@
 package hackaton2.server.domain
 
 import api.{FromMap, ToMap}
+import api.domain._
 
 object FriendsAlbum extends FromMap[FriendsAlbum] {
   def apply(map:Map[String,Any]) = FriendsAlbum(Friend.apply(map.asMap("friend")), Album.apply(map.asMap("album")))  
