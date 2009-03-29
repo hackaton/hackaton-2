@@ -1,6 +1,7 @@
 package hackaton
 
 import hackaton2.api.ToJSON
+import hackaton2.api.domain._
 import java.io.File
 import java.net.URL
 import org.junit.Test

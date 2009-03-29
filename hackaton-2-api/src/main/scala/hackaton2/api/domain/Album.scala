@@ -1,4 +1,4 @@
-package hackaton
+package hackaton2.api.domain
 
 import java.io.File
 import hackaton2.api.{ToMap, FromMap}

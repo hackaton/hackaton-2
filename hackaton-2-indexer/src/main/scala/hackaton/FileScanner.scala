@@ -1,6 +1,7 @@
 package hackaton
 
 import java.io.File
+import hackaton2.api.domain._
 
 class FileScanner(basedir: String) {
   private def filesIn(dir: String) = new File(dir).listFiles
