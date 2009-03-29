@@ -3,7 +3,7 @@ package hackaton2.server.rest
 import _root_.java.io._
 import _root_.java.lang.annotation.Annotation
 import _root_.java.lang.reflect.Type
-import api.{ToMap, ToJSON}
+import api.{FromJSON, ToMap, ToJSON}
 import javax.ws.rs._
 import javax.ws.rs.core._
 import javax.ws.rs.ext._
@@ -12,8 +12,8 @@ import util.parsing.json.JSON
 @Produces(Array("application/json"))
 @Provider
 class JSONWriterProvider extends MessageBodyWriter[Any] {
-  def isWriteable(c: Class[_], gt: Type, annotations: Array[Annotation], mediaType: MediaType) = ToJSON.isDefinedAt(c)
 
+  def isWriteable(c: Class[_], gt: Type, annotations: Array[Annotation], mediaType: MediaType) = ToJSON.isDefinedAt(c)
 
   def writeTo(t: Any,
              c: Class[_],
@@ -30,14 +30,17 @@ class JSONWriterProvider extends MessageBodyWriter[Any] {
 
 @Provider
 class JSONReaderProvider extends MessageBodyReader[Map[String, Any]] with IOUtil {
+
   def readFrom(clazz: Class[Map[String, Any]],
               t: Type,
               annotations: Array[Annotation],
               mediaType: MediaType,
               multiValue: MultivaluedMap[String, String],
-              in: InputStream):Map[String,Any] =
-    JSON.parseFull(("" /: in)(_ + _.asInstanceOf[Char])).map(_.asInstanceOf[Map[String,Any]]).getOrElse(Map[String,Any]())
-
+              in: InputStream): Map[String, Any] = {
+   // FromJSON.map(("" /: in)(_ + _.asInstanceOf[Char]))
+    val reader = new BufferedReader(new InputStreamReader(in))
+    FromJSON.map(("" /: reader)(_ + _))
+  }
 
   def isReadable(clazz: Class[_],
                 t: Type,

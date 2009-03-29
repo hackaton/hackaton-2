@@ -3,6 +3,7 @@ package hackaton2.server
 import org.mortbay.jetty.nio.SelectChannelConnector
 import org.mortbay.jetty.webapp.WebAppContext
 import org.mortbay.jetty.{Server => JettyServer}
+import util.parsing.json.JSON
 
 class Server() {
   val server = new JettyServer
@@ -17,10 +18,10 @@ class Server() {
     context.setWar("src/main/webapp")
     server.addHandler(context)
     server.start
-  }
+  }                                                                                                   
 
   def stop_! {
-    server.stop
+    server.stop  //TODO how to kill a jetty... ?
   }
 }
 
