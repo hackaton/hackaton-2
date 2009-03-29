@@ -6,15 +6,20 @@ import hackaton2.http.Http._
 import java.net.URL
 import java.io.File
 
+/**
+ * args(0) - basedir for music
+ * args(1) - server url
+ * args(2) - ctorrent binary
+ * args(3) - tracker url
+ */
 object Indexer {
   def main(args: Array[String]) {
-//    val url = getClass.getResource("/music")
-    val music = new File("<path>")
+    val music = new File(args(0))
     val fileScanner = new FileScanner(music.getPath)
-
-    val service = Http("http://localhost:8080/") ("albums")
-    val body = ToJSON(fileScanner.albums)
-    println(body)
-    println(service.post[String, String](body))
+    val service = Http(args(1))
+    val albums = fileScanner.albums
+    val cTorrent = new CTorrent(new File(args(2)), args(3))
+    albums.foreach(cTorrent.createFor)
+    println(service.post[String, String](ToJSON(albums)))
   }
 }
