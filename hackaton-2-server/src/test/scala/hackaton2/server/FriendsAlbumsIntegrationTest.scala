@@ -6,7 +6,7 @@ import domain._
 import com.jteigen.scalatest.JUnit4Runner
 
 import hackaton2.server.domain._
-
+import java.io.File
 import org.junit.runner.RunWith
 import org.scalatest.{BeforeAndAfter, Spec}
 
@@ -24,13 +24,13 @@ class FriendsAlbumsIntegrationTest extends Spec with BeforeAndAfter {
 
   describe("post") {
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() { def uncaughtException(t: Thread, e: Throwable) { println("Exception handler: "); e.printStackTrace } })
+    FriendsAlbums ! ClearFriendsAlbums
     Friends ! NewFriend("http://localhost:9090/", "funky")
     Friends ! NewFriend("http://localhost:9091/", "monkey")
     it("send albums to friends") {
-      val replies = Friends !? PostAlbumFriends(FriendsAlbum(MySelf, new Album("Johnny Cash", "Ring of Fire", Nil)))
+      val replies = Friends !? PostAlbumFriends(FriendsAlbum(MySelf, new Album("Johnny Cash", "Ring of Fire", Nil, new File(""))))
       println("REPLY: " + replies)
-      // TODO: Turned off until server clean-up issue resolved
-//      assert(FriendsAlbums !? CountAlbums === 2)
+//      assert(FriendsAlbums !? CountFriendsAlbums === 2)
     }
   }
   
