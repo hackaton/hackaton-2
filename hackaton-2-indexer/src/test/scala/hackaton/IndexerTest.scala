@@ -2,22 +2,27 @@ import hackaton2.api.ToJSON
 import java.io.File
 import java.net.URL
 import org.junit.Test
+import org.junit.Assert.assertTrue
 
 class IndexerTest {
-
   @Test
-  def files() {
+  def albums() {
     val url: URL = getClass.getResource("/music")
     val music: File = new File(url.toURI)
     val indexer: Indexer = new Indexer(music.getPath)
 
-//    for (song <- indexer.songs)
-//      println(song)
+    val albums = List[Album](
+      Album("TheBand", "TheAlbum", List[Song](
+        Song("TheBand", "TheAlbum", 1, "Song1"),
+        Song("TheBand", "TheAlbum", 2, "Song2"),
+        Song("TheBand", "TheAlbum", 3, "Song3")
+        )),
+      Album("OtherBand", "OtherAlbum", List[Song](
+        Song("OtherBand", "OtherAlbum", 1, "Song1"),
+        Song("OtherBand", "OtherAlbum", 2, "Song2")
+        )),
+      )
 
-//    for (song <- indexer.songs)
-//      println(ToJSON(song))
-
-    for (album <- indexer.albums)
-      println(album)
+    assertTrue(albums == indexer.albums)
   }
 }
