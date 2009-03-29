@@ -6,5 +6,6 @@ object Artist extends FromMap[Artist] {
   def apply(map:Map[String,Any]) = Artist(map("id").int, map("name").string)
 }
 
-case class Artist(id: Int, name: String) {
+case class Artist(id: Int, name: String) extends ToMap {
+  def toMap = Map("id" -> id, "name" -> name)
 }
