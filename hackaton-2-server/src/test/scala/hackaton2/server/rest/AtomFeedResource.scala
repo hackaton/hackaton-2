@@ -2,13 +2,13 @@ package hackaton2.server.rest
 
 
 import javax.ws.rs._
-import service.FeedConsumer
+import service.AtomFeedProducer
 
 @Path("/albums")
 @Produces(Array("application/atom+xml"))
-class MusicResource {
+class AtomFeedResource {
 
   @GET
-  def get = (new FeedConsumer).createAlbums
+  def get = (new AtomFeedProducer).createAlbums
 
 }
