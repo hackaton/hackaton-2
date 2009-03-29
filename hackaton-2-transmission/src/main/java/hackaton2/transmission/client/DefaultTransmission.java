@@ -32,7 +32,7 @@ public class DefaultTransmission implements Transmission {
 
     public List<Torrent> getTorrents() throws Exception {
         Map<String, Object> arguments = new HashMap<String, Object>();
-        arguments.put("fields", asList("id", "name", "hashString"));
+        arguments.put("fields", asList("id", "name", "hashString", "haveValid", "sizeWhenDone", "totalSize"));
 
         JSONObject responseArguments = request("torrent-get", arguments);
 
