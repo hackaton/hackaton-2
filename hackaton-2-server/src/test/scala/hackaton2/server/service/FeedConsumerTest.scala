@@ -13,14 +13,9 @@ import org.scalatest.Spec
 @RunWith(classOf[JUnit4Runner])
 class FeedConsumerTest extends Spec with ShouldMatchers {
 
-  //Server.start_!(9091)
-
   describe("AtomFeedProducer") {
-//    it("should receive feeds") {
-//       (new AtomFeedProducer).getAlbums
-//    }
 
-    it("should get a goddamn album") {
+    it("should get an  album") {
       var albums = (new AtomFeedProducer).createAlbums
       println(albums)
     }
