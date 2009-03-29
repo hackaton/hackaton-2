@@ -2,7 +2,9 @@ package hackaton2.server.domain
 
 import actors.Actor
 import actors.Actor._
-import api.{FromMap, ToMap}
+import api.{FromMap, ToMap, ToJSON}
+import http.Http
+import http.Http._
 
 object Friends extends Actor {
 
@@ -20,9 +22,11 @@ object Friends extends Actor {
         loop(friends)
       }
       case p: PostAlbumFriends => {
-        friends.foreach (friend => {
-          RestUtil.post(friend.url, "friends-albums", p.friendsAlbum)
+        val replies = friends.foreach (friend => {
+          def srvc = Http(friend.url)
+          srvc("friends-albums").post[String,String](ToJSON(p.friendsAlbum.toMap))
         })
+        reply(replies)
         loop(friends)
       }
     }
