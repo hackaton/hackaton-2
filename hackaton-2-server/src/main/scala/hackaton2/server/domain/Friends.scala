@@ -8,7 +8,7 @@ object Friends extends Actor {
 
   def act = loop(Nil)
 
-  def loop(implicit friends:List[Friend]){
+  def loop(implicit friends:List[Friend]) {
     react {
       case NewFriend(url, nick) => {
         val newFriend = Friend(newId, url, nick)
@@ -21,8 +21,9 @@ object Friends extends Actor {
       }
       case p: PostAlbumFriends => {
         friends.foreach (friend => {
-          
+          RestUtil.post(friend.url, "friends-albums", p.friendsAlbum)
         })
+        loop(friends)
       }
     }
   }
