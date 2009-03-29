@@ -13,7 +13,7 @@ import util.parsing.json.JSON
 @Provider
 class JSONWriterProvider extends MessageBodyWriter[Any] {
 
-  def isWriteable(c: Class[_], gt: Type, annotations: Array[Annotation], mediaType: MediaType) = ToJSON.isDefinedAt(c)
+  def isWriteable(c: Class[_], gt: Type, annotations: Array[Annotation], mediaType: MediaType) = ToJSON.support(c)
 
   def writeTo(t: Any,
              c: Class[_],
@@ -29,7 +29,7 @@ class JSONWriterProvider extends MessageBodyWriter[Any] {
 }
 
 @Provider
-class JSONReaderProvider extends MessageBodyReader[Map[String, Any]] with IOUtil {
+class JSONReaderMapProvider extends MessageBodyReader[Map[String, Any]] with IOUtil {
 
   def readFrom(clazz: Class[Map[String, Any]],
               t: Type,
@@ -37,7 +37,6 @@ class JSONReaderProvider extends MessageBodyReader[Map[String, Any]] with IOUtil
               mediaType: MediaType,
               multiValue: MultivaluedMap[String, String],
               in: InputStream): Map[String, Any] = {
-   // FromJSON.map(("" /: in)(_ + _.asInstanceOf[Char]))
     val reader = new BufferedReader(new InputStreamReader(in))
     FromJSON.map(("" /: reader)(_ + _))
   }
@@ -45,5 +44,28 @@ class JSONReaderProvider extends MessageBodyReader[Map[String, Any]] with IOUtil
   def isReadable(clazz: Class[_],
                 t: Type,
                 annotation: Array[Annotation],
-                mediaType: MediaType) = clazz.isAssignableFrom(classOf[Map[String, Any]])
+                mediaType: MediaType) = {
+    clazz.isAssignableFrom(classOf[Map[String, Any]])
+  }
+}
+
+@Provider
+class JSONReaderListProvider extends MessageBodyReader[List[Any]] with IOUtil {
+
+  def readFrom(clazz: Class[List[Any]],
+              t: Type,
+              annotations: Array[Annotation],
+              mediaType: MediaType,
+              multiValue: MultivaluedMap[String, String],
+              in: InputStream): List[Any] = {
+    val reader = new BufferedReader(new InputStreamReader(in))
+    FromJSON.list(("" /: reader)(_ + _))
+  }
+
+  def isReadable(clazz: Class[_],
+                t: Type,
+                annotation: Array[Annotation],
+                mediaType: MediaType) = {
+    clazz.isAssignableFrom(classOf[List[Any]])
+  }
 }
