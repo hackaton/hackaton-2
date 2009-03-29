@@ -26,8 +26,4 @@ object Server {
   def stop_!(port: Int) {
     servers(port).stop
   }
-
-  def main(args: Array[String]) {
-    start_!(8080)
-  }
 }
