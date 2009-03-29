@@ -9,3 +9,5 @@ object Friend extends FromMap[Friend] {
 case class Friend(id:Int, url:String, nick:String) extends ToMap {
   def toMap = Map("id" -> id, "url" -> url, "nick" -> nick)
 }
+
+object MySelf extends Friend(1, "http://localhost:8080", "me")
