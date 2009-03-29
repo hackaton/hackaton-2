@@ -66,5 +66,6 @@
     <module>hackaton-2-server</module>
     <module>hackaton-2-transmission</module>
     <module>hackaton-2-indexer</module>
+    <module>hackaton-2-test</module>
   </modules>
 </project>
