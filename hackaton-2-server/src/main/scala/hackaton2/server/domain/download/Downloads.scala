@@ -49,9 +49,9 @@ private object DownloadUpdater extends Actor {
   }
 }
 
-private case class State(downloads: List[Download], timestamp: long)
+private case class State(downloads: List[Download], timestamp: Long)
 
-case class Download(name: String, progress: double)
+case class Download(name: String, progress: Double)
 
 case object CurrentDownloads
 
