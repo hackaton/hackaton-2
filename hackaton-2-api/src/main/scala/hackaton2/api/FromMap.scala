@@ -7,7 +7,7 @@ trait FromMap[T] {
     def map = what.asInstanceOf[Map[String,Any]] 
   }
 
-  implicit def any2TypedAny(what:Any) = new TypedAny(what)
+  implicit def any2Typed(what:Any) = new TypedAny(what)
 
   def apply(map: Map[String, Any]): T
 }

@@ -1,11 +1,9 @@
 package hackaton2.server.domain
 
-
-
 import api.{FromMap, ToMap}
 
 object Friend extends FromMap[Friend] {
-  def apply(map:Map[String,Any]) = Friend(map("id").int, map("url").string, map("nick").string)
+  def apply(map:Map[String,Any]):Friend = Friend(map("id").int, map("url").string, map("nick").string)
 }
 
 case class Friend(id:Int, url:String, nick:String) extends ToMap {

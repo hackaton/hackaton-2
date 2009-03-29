@@ -6,7 +6,7 @@ import hackaton2.api.{ToMap, FromMap}
 object Song extends FromMap[Song] {
   private implicit def toInt(s: String) = Integer.parseInt(s.trim)
 
-  def apply(map: Map[String, Any]) = Song(map.string("artist"), map.string("album"), map.int("trackNo"), map.string("track"))
+  def apply(map: Map[String, Any]) = Song(map("artist").string, map("album").string, map("trackNo").int, map("track").string)
 
   def apply(file: File): Song = {
     val parts = file.getName.substring(0, file.getName.lastIndexOf('.')).split("-").toList
