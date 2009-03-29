@@ -22,5 +22,11 @@ class FeedConsumerTest extends Spec with ShouldMatchers {
 
   }
 
+  describe("pimped abdera"){
+    it("should be sweet"){
+      println((new AtomFeedProducer).createPimpedAlbums)
+    }
+  }
+
 
 }

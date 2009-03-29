@@ -3,6 +3,7 @@ package hackaton2.server.domain
 import actors.Actor
 import actors.Actor._
 import api.{FromMap, ToMap, ToJSON}
+import api.ToJSON._
 import http.Http
 import http.Http._
 
@@ -21,10 +22,9 @@ object Friends extends Actor {
         reply(friends)
         loop(friends)
       }
-      case p: PostAlbumFriends => {
-        val replies = friends.map((friend: Friend) => {
-          Http(friend.url)("friends-albums").post[String,(Int, String)](ToJSON(p.friendsAlbum.toMap))._1
-        })
+      case PostAlbumFriends(friendsAlbum) => {
+        val replies = friends.map((friend: Friend) =>
+          Http(friend.url)("friends-albums").post[String,(Int, String)](friendsAlbum.json)._1)
         reply(replies)
         loop(friends)
       }

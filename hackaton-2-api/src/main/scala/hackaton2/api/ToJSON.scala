@@ -16,6 +16,10 @@ object ToJSON {
     classOf[Map[String, Any]].isAssignableFrom(c) ||
             classOf[Seq[Any]].isAssignableFrom(c) ||
             classOf[ToMap].isAssignableFrom(c)
+
+  implicit def toJSON(any:Any) = new {
+    def json = ToJSON(any)
+  }
 }
 
 object FromJSON {
