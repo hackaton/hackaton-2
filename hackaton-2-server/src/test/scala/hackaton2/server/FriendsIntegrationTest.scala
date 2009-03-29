@@ -6,7 +6,6 @@ import domain.{Friend, NewFriend}
 import java.io.InputStream
 import org.junit.runner.RunWith
 import java.net.{HttpURLConnection, URL}
-import server.IntegrationSuite
 import util.parsing.json.JSON
 
 @RunWith(classOf[JUnit4Runner])
@@ -14,13 +13,10 @@ class FriendsIntegrationTest extends IntegrationSuite {
 
   describe("Friends resource"){
 
-    it("get /friends should return empty list"){
-      FromJSON.list(get("friends")) should be(Nil)
-    }
-
     it("post /friends should return new friend id"){
+      val id = (0 /: FromJSON.list(get("friends")).map(x => Friend(x.asInstanceOf[Map[String,Any]]).id))(_ max _) + 1
       val newFriend = NewFriend("http://foo.com", "foo")
-      Friend(FromJSON.map(post("friends", newFriend))) should be(Friend(1, newFriend.url, newFriend.nick))
+      Friend(FromJSON.map(post("friends", newFriend))) should be(Friend(id, newFriend.url, newFriend.nick))
     }
 
     it("get /friends should return the newly added friend"){
