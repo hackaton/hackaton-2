@@ -66,6 +66,7 @@ object Http {
     val Post = RequestMethod("POST")
     val Put = RequestMethod("PUT")
     val Delete = RequestMethod("DELETE")
+    val ContentType = AddRequestProperty("Content-Type", _:String)
   }
 
   object implicits {

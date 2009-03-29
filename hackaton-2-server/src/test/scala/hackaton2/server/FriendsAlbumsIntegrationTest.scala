@@ -9,17 +9,14 @@ import org.scalatest.{BeforeAndAfter, Spec}
 
 @RunWith(classOf[JUnit4Runner])
 class FriendsAlbumsIntegrationTest extends Spec with BeforeAndAfter {
-  val serverA = new Server
-  val serverB = new Server
-  
   override def beforeEach {
-    serverA.start_!(9090)
-    serverB.start_!(9091)
+    Server.start_!(9090)
+    Server.start_!(9091)
   }
 
   override def afterEach {
-    serverA.stop_!
-    serverB.stop_!
+    Server.stop_!(9090)
+    Server.stop_!(9091)
   }
 
   describe("post") {
