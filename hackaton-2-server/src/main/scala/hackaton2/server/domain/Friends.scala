@@ -2,13 +2,15 @@ package hackaton2.server.domain
 
 import actors.Actor
 import actors.Actor._
-import api.{FromMap, ToMap}
+import api.{FromMap, ToMap, ToJSON}
+import http.Http
+import http.Http._
 
 object Friends extends Actor {
 
   def act = loop(Nil)
 
-  def loop(implicit friends:List[Friend]){
+  def loop(implicit friends:List[Friend]) {
     react {
       case NewFriend(url, nick) => {
         val newFriend = Friend(newId, url, nick)
@@ -20,9 +22,12 @@ object Friends extends Actor {
         loop(friends)
       }
       case p: PostAlbumFriends => {
-        friends.foreach (friend => {
-          
+        val replies = friends.foreach (friend => {
+          def srvc = Http(friend.url)
+          srvc("friends-albums").post[String,String](ToJSON(p.friendsAlbum.toMap))
         })
+        reply(replies)
+        loop(friends)
       }
     }
   }
