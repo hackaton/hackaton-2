@@ -10,15 +10,15 @@ import org.apache.abdera.parser.Parser
 class AtomFeedProducer {
 
   def createAlbums: Feed = {
-    var abdera = new Abdera
-    var feed = abdera.newFeed
+    val abdera = new Abdera
+    val feed = abdera.newFeed
     feed.setId("1")
     feed.setTitle("Title")
     feed.setSubtitle("Subtitle")
     feed.setUpdated(new Date)
     feed.addLink("http://foo.com")
 
-    var e = feed.addEntry
+    val e = feed.addEntry
     e.setId("2")
     e.setTitle("Entry title")
 
