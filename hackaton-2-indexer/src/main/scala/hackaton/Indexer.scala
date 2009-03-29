@@ -19,7 +19,7 @@ class Indexer(basedir: String) {
             val key = (song.artist, song.album)
             val optAlbum = a.get(key).map(_ + song)
             a(key) = optAlbum.getOrElse(Album(song.artist, song.album, List(song)))
-  }
+  }.values.toList
 }
 
 object Song extends FromMap[Song] {

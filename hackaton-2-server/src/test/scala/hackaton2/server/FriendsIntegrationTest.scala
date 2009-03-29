@@ -1,12 +1,12 @@
 package hackaton2.server
 
-
 import api.FromJSON
 import com.jteigen.scalatest.JUnit4Runner
 import domain.{Friend, NewFriend}
 import java.io.InputStream
 import org.junit.runner.RunWith
 import java.net.{HttpURLConnection, URL}
+import server.IntegrationSuite
 import util.parsing.json.JSON
 
 @RunWith(classOf[JUnit4Runner])

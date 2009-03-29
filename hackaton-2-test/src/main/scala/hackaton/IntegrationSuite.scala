@@ -8,6 +8,7 @@ import java.io.InputStream
 import java.net.{URL, HttpURLConnection}
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfter, Spec}
+import scala.Option
 
 trait IntegrationSuite extends Spec with BeforeAndAfter with ShouldMatchers with IOUtil {
 
