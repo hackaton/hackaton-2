@@ -6,9 +6,21 @@ import domain._
 import javax.ws.rs._
 import javax.ws.rs.core.Response
 
-@Path("/albums-matches")
+@Path("/albums-search-matches")
 @Produces(Array("application/json"))
 class AlbumsSearchMatchesResources {
 
+  @POST
+  def post(data:Map[String,Any]): Response = {
+    try {
+       AlbumsSearchMatches ! AlbumsSearchMatch(data)
+    } catch {
+      case e => {
+        e.printStackTrace
+        Response.serverError.build
+      }
+    }
+    Response.ok.build
+  }
   
 }

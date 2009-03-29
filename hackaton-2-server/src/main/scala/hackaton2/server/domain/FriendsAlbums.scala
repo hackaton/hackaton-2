@@ -14,12 +14,18 @@ object FriendsAlbums extends Actor {
       case album: FriendsAlbum =>
         val drop = (friendsAlbums.size - 9) max 0
         loop(album :: friendsAlbums.dropRight(drop))
-      case CountAlbums =>
+      case CountFriendsAlbums =>
         reply(friendsAlbums.size)
+        loop(friendsAlbums)
+      case ClearFriendsAlbums =>
+        reply(friendsAlbums)
+        loop(Nil)
     }
   }
   
   start
 }
 
-case object CountAlbums
+case object CountFriendsAlbums
+
+case object ClearFriendsAlbums

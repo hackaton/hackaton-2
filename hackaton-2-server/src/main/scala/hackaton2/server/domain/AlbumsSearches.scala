@@ -15,14 +15,14 @@ object AlbumsSearches extends Actor {
   
   def loop(albumsSearches: List[AlbumsSearch]) {
     react {
-      case a: AlbumsSearch => {
-        Albums ! MatchAlbums(a)
-        loop(a :: albumsSearches)
+      case albumsSearch: AlbumsSearch => {
+        Albums ! albumsSearch
+        loop(albumsSearch :: albumsSearches)
       }
-      case mSearches: MatchSearches => {
-        for (s <- albumsSearches; if mSearches.album matches s.criteria) {
-          Http(s.origin.url)("albums-matches").post[String,String](ToJSON(FriendsAlbum(MySelf, mSearches.album)))
-        }
+      case album: Album => {
+        var replies = albumsSearches.filter(album matches _.criteria).map((albumSearch) => {
+          Http(albumSearch.origin.url)("albums-search-matches").post[String,(Int,String)](ToJSON(AlbumsSearchMatch(albumSearch,FriendsAlbum(MySelf, album))))._1
+        })
         loop(albumsSearches)
       }
     }
@@ -30,5 +30,3 @@ object AlbumsSearches extends Actor {
   
   start
 }
-
-case class MatchSearches(album: Album)

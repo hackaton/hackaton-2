@@ -25,13 +25,14 @@ class FriendsAlbumsIntegrationTest extends Spec with BeforeAndAfter {
 
   describe("post") {
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() { def uncaughtException(t: Thread, e: Throwable) { println("Exception handler: "); e.printStackTrace } })
-    FriendsAlbums ! ClearFriendsAlbums
-    Friends ! NewFriend("http://localhost:9090/", "funky")
-    Friends ! NewFriend("http://localhost:9091/", "monkey")
+    FriendsAlbums !? ClearFriendsAlbums
+    Friends !? ClearFriends
+    Friends !? NewFriend("http://localhost:9090/", "funky")
+    Friends !? NewFriend("http://localhost:9091/", "monkey")
     it("send albums to friends") {
-      val replies = Friends !? PostAlbumFriends(FriendsAlbum(MySelf, new Album("Johnny Cash", "Ring of Fire", Nil, new File("location"))))
+      val replies = Friends !? FriendsAlbum(MySelf, new Album("Johnny Cash", "Ring of Fire", Nil, new File("location")))
       println("REPLY: " + replies)
-//      assert(FriendsAlbums !? CountFriendsAlbums === 2)
+      assert(FriendsAlbums !? CountFriendsAlbums === 2)
     }
   }
   
