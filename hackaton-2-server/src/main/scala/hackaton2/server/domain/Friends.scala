@@ -36,6 +36,7 @@ object Friends extends Actor {
 object NewFriend extends FromMap[NewFriend]{
   def apply(map:Map[String,Any]) = NewFriend(map.string("url"), map.string("nick"))
 }
+
 case class NewFriend(url:String, nick:String) extends ToMap {
   def toMap = Map("url" -> url, "nick" -> nick)
 }

@@ -27,8 +27,8 @@ public class ClientTest {
         }
     }
 
-    @Ignore
     @Test
+    @Ignore
     public void testAddRemove() throws Exception {
         Transmission transmission = new DefaultTransmission("http://127.0.0.1:9091/transmission/rpc");
 
