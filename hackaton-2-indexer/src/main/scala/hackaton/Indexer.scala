@@ -33,7 +33,7 @@ object Song extends FromMap[Song] {
   }
 }
 
-case class Song(artist: String, album: String, trackNo: int, track: String) extends ToMap {
+case class Song(artist: String, album: String, trackNo: Int, track: String) extends ToMap {
   def toMap = Map("artist" -> artist, "album" -> album, "trackNo" -> trackNo, "track" -> track)
 }
 

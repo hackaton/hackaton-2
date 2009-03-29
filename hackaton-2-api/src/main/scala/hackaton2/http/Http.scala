@@ -1,4 +1,4 @@
-package hackaton2.http2
+package hackaton2.http
 
 
 import java.io.{BufferedWriter, OutputStreamWriter, PrintWriter, OutputStream, InputStream}
@@ -155,7 +155,7 @@ object Receive {
     }
 }
 
-private[http2] class IterableInputStream(in: InputStream) extends Iterator[Int] {
+private[http] class IterableInputStream(in: InputStream) extends Iterator[Int] {
   var _next = -1
   var read = true
 
